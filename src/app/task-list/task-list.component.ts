@@ -14,21 +14,31 @@ export class TaskListComponent {
   // Liên kết với mảng dữ liệu dùng chung
   tasks = TASKS;
 
-  // Chuyển trạng thái công việc sang Đang làm (1)
+  // Xử lý sự kiện khi bấm nút "Thực hiện"
   onExecute(t: task): void {
-    t.status = 1;
+    if (t) {
+      t.status = 1; // Chuyển trạng thái thành 'Đang làm'
+      alert(`Đã chuyển trạng thái "${t.title}" thành Đang làm!`);
+    }
   }
 
-  // Chuyển trạng thái công việc sang Hoàn thành (2)
+  // Xử lý sự kiện khi bấm nút "Kết thúc"
   onComplete(t: task): void {
-    t.status = 2;
+    if (t) {
+      t.status = 2; // Chuyển trạng thái thành 'Hoàn thành'
+      alert(`Chúc mừng! Bạn đã hoàn thành "${t.title}".`);
+    }
   }
 
-  // Xóa công việc khỏi mảng dữ liệu
+  // Xử lý sự kiện khi bấm nút "Xóa bỏ"
   onDelete(t: task): void {
-    const index = this.tasks.findIndex(obj => obj.id === t.id);
-    if (index !== -1) {
-      this.tasks.splice(index, 1);
+    if (t) {
+      // Tìm vị trí và xóa khỏi mảng dữ liệu mock tạm thời
+      const index = TASKS.findIndex(obj => obj.id === t?.id);
+      if (index !== -1) {
+        TASKS.splice(index, 1);
+        alert(`Đã xóa công việc thành công!`);
+      }
     }
   }
 }
