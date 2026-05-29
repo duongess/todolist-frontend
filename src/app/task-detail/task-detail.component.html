@@ -1,0 +1,39 @@
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6">
+  <div class="flex items-center justify-between border-b border-gray-100 pb-4 mb-5">
+    <h1 class="text-2xl font-bold text-gray-800">Chi tiết công việc</h1>
+    <button [routerLink]="['/list']" class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors">
+      &larr; Quay lại
+    </button>
+  </div>
+
+  <div *ngIf="t" class="space-y-4">
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900">{{ t.title }}</h2>
+    </div>
+    
+    <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Nội dung công việc</h3>
+      <p class="text-gray-700 whitespace-pre-line text-sm leading-relaxed">{{ t.content }}</p>
+    </div>
+    
+    <div class="flex items-center space-x-3 pt-4 border-t border-gray-100">
+      <button class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 border border-transparent rounded-md shadow-xs transition-colors">
+        Xóa bỏ
+      </button>
+      
+      <button *ngIf="t.status !== 2" 
+              class="px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-xs transition-colors"
+              [ngClass]="{
+                'bg-blue-600 hover:bg-blue-700': t.status == 0,
+                'bg-green-600 hover:bg-green-700': t.status == 1
+              }">
+        <span *ngIf="t.status == 0">Thực hiện</span>
+        <span *ngIf="t.status == 1">Kết thúc công việc</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!t" class="text-center py-6 text-gray-500">
+    <p class="text-sm">Không tìm thấy thông tin chi tiết của công việc này.</p>
+  </div>
+</div>

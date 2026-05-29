@@ -1,0 +1,48 @@
+<div class="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Danh sách công việc</h1>
+    <button [routerLink]="['/new']" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full transition-colors duration-200 shadow-sm text-sm">
+      Thêm công việc mới
+    </button>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200 text-sm text-left">
+      <thead class="bg-gray-50 text-gray-700 uppercase text-xs font-semibold">
+        <tr>
+          <th class="px-6 py-3">STT</th>
+          <th class="px-6 py-3">Tên công việc</th>
+          <th class="px-6 py-3">Trạng thái</th>
+          <th class="px-6 py-3">Hành động</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 text-gray-600">
+        <tr *ngFor="let task of tasks" class="hover:bg-gray-50 transition-colors">
+          <td class="px-6 py-4 font-medium text-gray-900">{{ task.id }}</td>
+          <td class="px-6 py-4">
+            <a [routerLink]="['/detail', task.id]" class="text-blue-600 hover:text-blue-800 hover:underline font-medium">
+              {{ task.title }}
+            </a>
+          </td>
+          <td class="px-6 py-4">
+            <span *ngIf="task.status == 0" class="px-2.5 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800">Chưa làm</span>
+            <span *ngIf="task.status == 1" class="px-2.5 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800">Đang làm</span>
+            <span *ngIf="task.status == 2" class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Hoàn thành</span>
+          </td>
+          <td class="px-6 py-4">
+            <button class="font-medium text-sm py-1.5 px-4 rounded-full border transition-colors shadow-xs"
+                    [ngClass]="{
+                      'bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100': task.status == 0,
+                      'bg-green-50 text-green-600 border-green-200 hover:bg-green-100': task.status == 1,
+                      'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100': task.status == 2
+                    }">
+              <span *ngIf="task.status == 0">Thực hiện</span>
+              <span *ngIf="task.status == 1">Kết thúc</span>
+              <span *ngIf="task.status == 2">Xóa</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
