@@ -29,16 +29,20 @@
             <span *ngIf="task.status == 1" class="px-2.5 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800">Đang làm</span>
             <span *ngIf="task.status == 2" class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Hoàn thành</span>
           </td>
-          <td class="px-6 py-4">
-            <button class="font-medium text-sm py-1.5 px-4 rounded-full border transition-colors shadow-xs"
-                    [ngClass]="{
-                      'bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100': task.status == 0,
-                      'bg-green-50 text-green-600 border-green-200 hover:bg-green-100': task.status == 1,
-                      'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100': task.status == 2
-                    }">
-              <span *ngIf="task.status == 0">Thực hiện</span>
-              <span *ngIf="task.status == 1">Kết thúc</span>
-              <span *ngIf="task.status == 2">Xóa</span>
+          <td class="px-6 py-4 flex gap-2">
+            <button *ngIf="task.status === 0" (click)="onExecute(task)" 
+                    class="font-medium text-sm py-1.5 px-4 rounded-full border bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100 transition-colors">
+              Thực hiện
+            </button>
+            
+            <button *ngIf="task.status === 1" (click)="onComplete(task)" 
+                    class="font-medium text-sm py-1.5 px-4 rounded-full border bg-green-50 text-green-600 border-green-200 hover:bg-green-100 transition-colors">
+              Kết thúc
+            </button>
+            
+            <button (click)="onDelete(task)" 
+                    class="font-medium text-sm py-1.5 px-4 rounded-full border bg-red-50 text-red-600 border-red-200 hover:bg-red-100 transition-colors">
+              Xóa
             </button>
           </td>
         </tr>

@@ -2,28 +2,39 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
+import { TASKS } from '../mock-tasks';
 
 @Component({
   selector: 'app-task-new',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink], // Đăng ký trực tiếp ReactiveFormsModule tại đây
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './task-new.component.html'
 })
 export class TaskNewComponent {
   newForm: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router) {
-    // Khởi tạo cấu trúc các ô nhập liệu cho biểu mẫu thêm mới
     this.newForm = this.fb.group({
       title: [''],
       content: ['']
     });
   }
 
-  // Xử lý hành động gửi dữ liệu từ biểu mẫu
   onSubmit(): void {
-    console.log(this.newForm.value);
-    // Quay trở lại trang danh sách sau khi submit xong log dữ liệu
+    const formValue = this.newForm.value;
+    
+    // Tính toán ID mới dựa trên ID lớn nhất trong mảng hiện tại
+    const newId = TASKS.length > 0 ? Math.max(...TASKS.map(t => t.id || 0)) + 1 : 1;
+    
+    // Đẩy dữ liệu mới vào mảng TASKS dùng chung
+    TASKS.push({
+      id: newId,
+      title: formValue.title,
+      content: formValue.content,
+      status: 0 // Khởi tạo trạng thái mặc định là Chưa làm
+    });
+
+    // Điều hướng về trang danh sách để xem kết quả
     this.router.navigate(['/list']);
   }
 }
